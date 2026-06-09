@@ -1,8 +1,7 @@
 package com.mercadolivro.model
 
 class CustomerModel (
-    var id: int? = null,
-    val name:
-    val email:
-
+    var id: Int,
+    val name: String,
+    val email: String
 )

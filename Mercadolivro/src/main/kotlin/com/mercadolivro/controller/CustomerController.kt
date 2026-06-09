@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("customer")
 class CustomerController {
-
     val customers = mutableListOf<CustomerModel>()
 
     @GetMapping
@@ -19,20 +18,17 @@ class CustomerController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody customer: PostCustomerRequest) {
-
         val id = if (customers.isEmpty()) {
-            "1"
+            1
         } else {
-            (customers.last().id.toInt() + 1).toString()
+            customers.last().id + 1
         }
-
-
-        customers.add(CustomerModel(id = id, name = customer.name, email = customer.email))
+        customers.add(CustomerModel(id, customer.name, customer.email))
+        println(customer)
     }
 
     @GetMapping("/{id}")
-    fun getCustomer(@PathVariable id: String): CustomerModel? {
-        println("id")
-        return customers.find { it.id == id }
+    fun getCustomer(@PathVariable id: Int): CustomerModel {
+        return customers.filter { it.id == id }.first()
     }
 }
